@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Blog, BlogImage, Category, Comment
+from django.shortcuts import get_object_or_404
 # Create your views here.
 
 def blog_page(request):
@@ -22,5 +23,14 @@ def contact_page(request):
 
 
 def blog_detail_page(request, blog_id):
-  
-    return render(request, template_name='post.html')
+    blog = get_object_or_404(Blog, pk=blog_id)
+    kommentlar = Comment.objects.filter(blog_id=blog_id)
+    if request.method == "post":
+        pass
+    # birinchi_rasm = 
+    # ikkinchi_rasm = 
+    context = {
+        "blog": blog,
+        'kommentlar': kommentlar
+    }
+    return render(request, template_name='post.html', context=context)

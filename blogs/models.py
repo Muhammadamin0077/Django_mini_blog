@@ -16,7 +16,13 @@ class Blog(models.Model):
     category_id = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='category')
     
     def get_images(self):
-        return BlogImage.objects.filter(blog_id=self.id)
+        return BlogImage.objects.filter(blog_id=self.id)[1:]
+    
+    def get_birinchi_image(self):
+        return BlogImage.objects.filter(blog_id=self.id)[0].image.url
+    
+    def get_count_comments(self):
+        return Comment.objects.filter(blog_id=self.id).count()
 
     def __str__(self):
         return self.title
